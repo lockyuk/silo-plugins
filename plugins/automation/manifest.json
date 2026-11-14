@@ -1,0 +1,91 @@
+{
+  "plugin_id": "community.automation",
+  "version": "1.2.0",
+  "checksum": "__CHECKSUM__",
+  "silo_api_version": "v1",
+  "category": "Tools",
+  "supported_platforms": [
+    { "os": "linux", "arch": "amd64" },
+    { "os": "linux", "arch": "arm64" }
+  ],
+  "capabilities": [
+    {
+      "type": "http_routes.v1",
+      "id": "automation",
+      "display_name": "Automation dashboards",
+      "description": "Lets Silo's TV app show Radarr, Sonarr and SABnzbd on its Server page, without the apps' keys ever leaving the server.",
+      "metadata": { "connection_check": true }
+    }
+  ],
+  "http_routes": [
+    { "id": "read", "method": "GET", "path": "/api/*", "access": "admin" },
+    { "id": "act", "method": "POST", "path": "/api/*", "access": "admin" }
+  ],
+  "global_config_schema": [
+    {
+      "key": "radarr",
+      "title": "Radarr",
+      "description": "Movies. Find the API key in Radarr under Settings → General → Security.",
+      "required": false,
+      "json_schema": "{\"type\":\"object\",\"properties\":{\"url\":{\"type\":\"string\"},\"api_key\":{\"type\":\"string\"}},\"additionalProperties\":false}",
+      "admin_form": {
+        "fields": [
+          { "key": "url", "label": "Address", "description": "Including the port, as Silo's server can reach it.", "control": "ADMIN_FORM_CONTROL_TEXT", "placeholder": "http://192.168.1.10:7878" },
+          { "key": "api_key", "label": "API key", "control": "ADMIN_FORM_CONTROL_PASSWORD", "secret": true }
+        ],
+        "submit_label": "Save Radarr"
+      }
+    },
+    {
+      "key": "sonarr",
+      "title": "Sonarr",
+      "description": "Series. Find the API key in Sonarr under Settings → General → Security.",
+      "required": false,
+      "json_schema": "{\"type\":\"object\",\"properties\":{\"url\":{\"type\":\"string\"},\"api_key\":{\"type\":\"string\"}},\"additionalProperties\":false}",
+      "admin_form": {
+        "fields": [
+          { "key": "url", "label": "Address", "description": "Including the port, as Silo's server can reach it.", "control": "ADMIN_FORM_CONTROL_TEXT", "placeholder": "http://192.168.1.10:8989" },
+          { "key": "api_key", "label": "API key", "control": "ADMIN_FORM_CONTROL_PASSWORD", "secret": true }
+        ],
+        "submit_label": "Save Sonarr"
+      }
+    },
+    {
+      "key": "sabnzbd",
+      "title": "SABnzbd",
+      "description": "Downloads. Find the API key in SABnzbd under Config → General → Security.",
+      "required": false,
+      "json_schema": "{\"type\":\"object\",\"properties\":{\"url\":{\"type\":\"string\"},\"api_key\":{\"type\":\"string\"}},\"additionalProperties\":false}",
+      "admin_form": {
+        "fields": [
+          { "key": "url", "label": "Address", "description": "Including the port, as Silo's server can reach it.", "control": "ADMIN_FORM_CONTROL_TEXT", "placeholder": "http://192.168.1.10:8080" },
+          { "key": "api_key", "label": "API key", "control": "ADMIN_FORM_CONTROL_PASSWORD", "secret": true }
+        ],
+        "submit_label": "Save SABnzbd"
+      }
+    },
+    {
+      "key": "seerr",
+      "title": "Seerr",
+      "description": "Requests. Find the API key in Seerr under Settings → General. Approve, deny and delete from the TV; Seerr sends the notifications.",
+      "required": false,
+      "json_schema": "{\"type\":\"object\",\"properties\":{\"url\":{\"type\":\"string\"},\"api_key\":{\"type\":\"string\"}},\"additionalProperties\":false}",
+      "admin_form": {
+        "fields": [
+          { "key": "url", "label": "Address", "description": "Including the port, as Silo's server can reach it.", "control": "ADMIN_FORM_CONTROL_TEXT", "placeholder": "http://192.168.1.10:5055" },
+          { "key": "api_key", "label": "API key", "control": "ADMIN_FORM_CONTROL_PASSWORD", "secret": true }
+        ],
+        "submit_label": "Save Seerr"
+      }
+    }
+  ],
+  "presentation": {
+    "display_name": "Automation dashboards",
+    "summary": "Radarr, Sonarr, SABnzbd and Seerr on the Silo TV app's Server page. Addresses and keys stay on the server.",
+    "description_markdown": "Connects Silo to **Radarr**, **Sonarr** and **SABnzbd** so the Android TV app's Server page can show their queues, calendars, history and health, and run a few actions (search missing, refresh, pause, speed limit).\n\nOnly admins can use it. The TV asks Silo, Silo asks the apps: the API keys never leave the server.",
+    "setup_markdown": "Fill in the address and API key for each app you use. Leave an app empty to hide its page.",
+    "publisher_name": "locky.uk",
+    "license_spdx": "MIT",
+    "publisher_url": "https://github.com/lockyuk"
+  }
+}
